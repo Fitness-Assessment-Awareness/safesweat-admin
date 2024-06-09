@@ -28,7 +28,7 @@ import {
     getWorkoutPlanForm,
     updateWorkoutPlan,
 } from '../../utils/WorkoutPlanUtils';
-import { ExercisePaper } from '../exercise/ExercisePaper';
+import { ExercisePaper } from './ExercisePaper';
 import { WorkoutPlanContext } from './WorkoutPlanWrapper';
 
 type ComponentProps = {

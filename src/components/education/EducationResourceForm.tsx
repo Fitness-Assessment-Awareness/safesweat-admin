@@ -31,7 +31,8 @@ type ComponentProps = {
     initialImageUrl?: string;
 };
 
-const { TITLE_EN, TITLE_MS, CONTENT_EN, CONTENT_MS, CATEGORY_ID, CREATED_BY, IMAGE_FILE, LAST_UPDATED_BY } = EDUCATION_RESOURCE_FORM_KEY;
+const { TITLE_EN, TITLE_MS, CONTENT_EN, CONTENT_MS, CATEGORY_ID, CREATED_BY, IMAGE_FILE, LAST_UPDATED_BY } =
+    EDUCATION_RESOURCE_FORM_KEY;
 
 export function EducationResourceForm({ close, initialFormValue, initialImageUrl }: ComponentProps) {
     const { existingEducationResources, setExistingEducationResources } = useContext(EducationResourceContext);
@@ -42,7 +43,9 @@ export function EducationResourceForm({ close, initialFormValue, initialImageUrl
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [categoryIdSelect, setCategoryIdSelect] = useState<string | null>(initialFormValue?.categoryId ? initialFormValue.categoryId : null);
+    const [categoryIdSelect, setCategoryIdSelect] = useState<string | null>(
+        initialFormValue?.categoryId ? initialFormValue.categoryId : null,
+    );
 
     useEffect(() => {
         fetchEducationCategories().then((categories) => setDbEducationCategories(categories));
@@ -61,6 +64,9 @@ export function EducationResourceForm({ close, initialFormValue, initialImageUrl
                 if (!initialFormValue) {
                     const newPlan = await createNewEducationResource(formValue);
                     if (newPlan) {
+                        newPlan.categoryDto = dbEducationCategories.filter(
+                            (category) => category.categoryId === newPlan.categoryId,
+                        )[0];
                         setExistingEducationResources([...existingEducationResources, newPlan]);
                         close();
                     }
@@ -71,6 +77,9 @@ export function EducationResourceForm({ close, initialFormValue, initialImageUrl
                         initialImageUrl as string,
                     );
                     if (updatedResource) {
+                        updatedResource.categoryDto = dbEducationCategories.filter(
+                            (category) => category.categoryId === updatedResource.categoryId,
+                        )[0];
                         const updatedResources = existingEducationResources.map((resource) => {
                             if (resource.postId === updatedResource.postId) {
                                 return updatedResource;
@@ -153,10 +162,10 @@ export function EducationResourceForm({ close, initialFormValue, initialImageUrl
                         key={FORM.key(CATEGORY_ID)}
                         {...FORM.getInputProps(CATEGORY_ID)}
                         onChange={(value) => {
-                            setCategoryIdSelect(value)
+                            setCategoryIdSelect(value);
                             FORM.setValues({
                                 categoryId: value,
-                            })
+                            });
                         }}
                         data={dbEducationCategories.map((category) => ({
                             label: category.name,

@@ -1,6 +1,6 @@
-import { Button, Group, Modal, Text } from '@mantine/core';
+import { Button, Group, Modal, Text, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconPlus } from '@tabler/icons-react';
+import { IconPlus, IconSearch } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { fetchWorkoutPlans } from '../../services/WorkoutPlanService';
 import { WorkoutPlan } from '../../types/WorkoutPlan';
@@ -20,6 +20,8 @@ export function WorkoutPlanWrapper() {
 
     const [modalOpened, { open: openModal, close: closeModal }] = useDisclosure(false);
 
+    const [searchValue, setSearchValue] = useState('');
+
     useEffect(() => {
         fetchWorkoutPlans().then((plans) => setExistingWorkoutPlans(plans));
     }, []);
@@ -29,8 +31,18 @@ export function WorkoutPlanWrapper() {
             <Group
                 m={'md'}
                 pb={'md'}
-                justify="flex-end"
+                justify="space-between"
             >
+                <TextInput
+                    size="lg"
+                    leftSection={<IconSearch />}
+                    placeholder="Search by title or difficulty level"
+                    radius={'md'}
+                    w={'80%'}
+                    value={searchValue}
+                    onChange={(event) => setSearchValue(event.currentTarget.value)}
+                />
+
                 <Button
                     leftSection={<IconPlus />}
                     onClick={openModal}
@@ -42,12 +54,24 @@ export function WorkoutPlanWrapper() {
             </Group>
 
             {existingWorkoutPlans.length > 0 ? (
-                existingWorkoutPlans.map((plan) => (
-                    <WorkoutPlanPaper
-                        key={plan.planId}
-                        workoutPlan={plan}
-                    />
-                ))
+                existingWorkoutPlans
+                    .filter((plan) => {
+                        if (searchValue === '') {
+                            return plan;
+                        } else if (
+                            plan.titleEn.toLowerCase().includes(searchValue.toLowerCase()) ||
+                            plan.titleMs.toLowerCase().includes(searchValue.toLowerCase()) ||
+                            plan.difficulty.toLowerCase().includes(searchValue.toLowerCase())
+                        ) {
+                            return plan;
+                        }
+                    })
+                    .map((plan) => (
+                        <WorkoutPlanPaper
+                            key={plan.planId}
+                            workoutPlan={plan}
+                        />
+                    ))
             ) : (
                 <Text
                     size="xl"

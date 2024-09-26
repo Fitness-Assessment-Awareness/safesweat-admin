@@ -67,6 +67,7 @@ export function EducationResourceForm({ close, initialFormValue, initialImageUrl
                         newPlan.categoryDto = dbEducationCategories.filter(
                             (category) => category.categoryId === newPlan.categoryId,
                         )[0];
+                        newPlan.educationPostLikeDtos = [];
                         setExistingEducationResources([...existingEducationResources, newPlan]);
                         close();
                     }

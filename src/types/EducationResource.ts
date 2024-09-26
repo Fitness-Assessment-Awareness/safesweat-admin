@@ -1,4 +1,5 @@
-import { EducationCategory } from "./EducationCategory";
+import { EducationCategory } from './EducationCategory';
+import { EducationPostLike } from './EducationPostLike';
 
 export type EducationResource = {
     postId?: string;
@@ -8,10 +9,11 @@ export type EducationResource = {
     contentMs: string;
     categoryId: string;
     imageUrl: string;
-    likeCount?: number;
     createdDate?: Date;
     createdBy: string;
     lastUpdatedDate?: Date;
     lastUpdatedBy?: string;
     categoryDto?: EducationCategory;
+    educationPostLikeDtos?: EducationPostLike[];
+    educationPostBookmarkDtos?: EducationPostLike[];
 };

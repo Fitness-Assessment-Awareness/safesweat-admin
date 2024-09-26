@@ -159,7 +159,7 @@ export function EducationResourcePaper({ educationResource }: ComponentProps) {
                                 <IconCategory />
                                 <Text fs="italic">{educationResource.categoryDto?.name}</Text>
                                 <IconThumbUp />
-                                <Text fs="italic">{educationResource.likeCount}</Text>
+                                <Text fs="italic">{educationResource.educationPostLikeDtos?.length}</Text>
                                 <IconUser />
                                 <Tooltip
                                     label={new Date(educationResource.createdDate as Date)?.toLocaleDateString(

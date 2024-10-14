@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_BACKEND_BASE_URL;
+
 export const Network = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: baseURL,
     validateStatus: axios.defaults.validateStatus,
     timeout: 12000,
 });

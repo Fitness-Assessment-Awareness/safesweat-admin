@@ -1,7 +1,8 @@
-import { AppShell, Burger, Group } from '@mantine/core';
+import { AppShell, Box, Burger, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconBook, IconRun, IconStretching } from '@tabler/icons-react';
 import { useState } from 'react';
+import { AuthenticationForm } from '../components/authentication/AuthenticationForm';
 import { EducationalResourceWrapper } from '../components/education/EducationalResourceWrapper';
 import { NavItem } from '../components/navigation/NavItem';
 import { WorkoutPlanWrapper } from '../components/workout/WorkoutPlanWrapper';
@@ -9,6 +10,7 @@ import { WorkoutPlanWrapper } from '../components/workout/WorkoutPlanWrapper';
 export function AppLayout() {
     const [opened, { toggle }] = useDisclosure();
     const [active, setActive] = useState(0);
+    const [authenticated, setAuthenticated] = useState(localStorage.getItem('authenticated') === 'true');
 
     const navItems = [
         {
@@ -20,6 +22,18 @@ export function AppLayout() {
             label: 'Educational Resources',
         },
     ];
+
+    if (!authenticated) {
+        return (
+            <Box
+                w={'40%'}
+                mt={'xl'}
+                mx={'auto'}
+            >
+                <AuthenticationForm setAuthenticated={setAuthenticated} />
+            </Box>
+        );
+    }
 
     return (
         <AppShell

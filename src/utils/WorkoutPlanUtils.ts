@@ -30,9 +30,9 @@ export const NEW_EXERCISE = {
 };
 
 export enum WorkoutDifficulty {
-    Beginner = 'BEGINNER',
-    Intermediate = 'INTERMEDIATE',
-    Advanced = 'ADVANCED',
+    Beginner = 'Beginner',
+    Intermediate = 'Intermediate',
+    Advanced = 'Advanced',
 }
 
 export const WORKOUT_PLAN_BUCKET = 'workout-plan';
